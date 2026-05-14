@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KAPILY SALON</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap');
+        body { font-family: 'Cairo', sans-serif; background-color: black; color: white; }
+    </style>
+</head>
+<body>
+    <div class="min-h-screen p-4">
+        <header class="text-center py-6 mb-4">
+            <h1 class="text-4xl font-black text-yellow-500 tracking-tighter">KAPILY SALON</h1>
+            <div class="h-1 w-20 bg-yellow-600 mx-auto mt-2 rounded-full"></div>
+        </header>
+
+        <main id="app" class="max-w-md mx-auto bg-zinc-900/50 backdrop-blur-md rounded-3xl p-6 border border-zinc-800 shadow-2xl">
+            <div id="step1">
+                <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
+                    <span class="w-2 h-8 bg-yellow-500 rounded-full"></span>
+                    اختار الحلاق
+                </h2>
+                <div class="grid gap-4">
+                    <button onclick="selectBarber('أشرف', '201119576866')" class="bg-zinc-800 hover:bg-yellow-600 p-5 rounded-2xl transition-all text-right flex justify-between items-center group">
+                        <span class="text-lg font-bold group-hover:text-black">أشرف</span>
+                        <span class="text-green-500 text-xs group-hover:text-black">متاح</span>
+                    </button>
+                    <button onclick="selectBarber('حماده', '201128375682')" class="bg-zinc-800 hover:bg-yellow-600 p-5 rounded-2xl transition-all text-right flex justify-between items-center group">
+                        <span class="text-lg font-bold group-hover:text-black">حماده</span>
+                        <span class="text-green-500 text-xs group-hover:text-black">متاح</span>
+                    </button>
+                    <button onclick="selectBarber('يوسف', '201229818899')" class="bg-zinc-800 hover:bg-yellow-600 p-5 rounded-2xl transition-all text-right flex justify-between items-center group">
+                        <span class="text-lg font-bold group-hover:text-black">يوسف</span>
+                        <span class="text-green-500 text-xs group-hover:text-black">متاح</span>
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        let barber = ""; let phone = "";
+        function selectBarber(n, p) {
+            barber = n; phone = p;
+            document.getElementById('app').innerHTML = `
+                <button onclick="location.reload()" class="text-zinc-500 mb-4">← رجوع</button>
+                <h2 class="text-xl font-bold mb-6 italic">اختار الخدمة (للحلاق ${n})</h2>
+                <div class="grid gap-3">
+                    <button onclick="confirm('حلاقة شعر', 100)" class="bg-zinc-800 p-4 rounded-xl text-right flex justify-between"><span>حلاقة شعر</span><span class="text-yellow-500">100 ج</span></button>
+                    <button onclick="confirm('حلاقة ذقن', 50)" class="bg-zinc-800 p-4 rounded-xl text-right flex justify-between"><span>حلاقة ذقن</span><span class="text-yellow-500">50 ج</span></button>
+                    <button onclick="confirm('شعر وذقن', 140)" class="bg-zinc-800 p-4 rounded-xl text-right flex justify-between"><span>شعر وذقن</span><span class="text-yellow-500">140 ج</span></button>
+                </div>`;
+        }
+        function confirm(service, price) {
+            let name = prompt("اكتب اسمك لتأكيد الحجز:");
+            if(name) {
+                let msg = `حجز جديد من الموقع%0aالاسم: ${name}%0aالحلاق: ${barber}%0aالخدمة: ${service}%0aالسعر: ${price}ج`;
+                window.open(`https://wa.me/${phone}?text=${msg}`);
+            }
+        }
+    </script>
+</body>
+</html>
+  
