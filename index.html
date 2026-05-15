@@ -36,20 +36,25 @@
 
         <p class="gold-text font-bold mb-2">اختر الخدمات:</p>
         <div class="grid grid-cols-2 gap-2 mb-6" id="servicesGrid">
-            <div class="service-item" onclick="selS(this, 'قص شعر', 150)">قص شعر <br> <span class="text-xs">150 ج</span></div>
-            <div class="service-item" onclick="selS(this, 'حلاقة ذقن', 100)">حلاقة ذقن <br> <span class="text-xs">100 ج</span></div>
-            <div class="service-item" onclick="selS(this, 'استشوار', 70)">استشوار <br> <span class="text-xs">70 ج</span></div>
-            <div class="service-item" onclick="selS(this, 'تنظيف بشرة', 250)">تنظيف بشرة <br> <span class="text-xs">250 ج</span></div>
+            <div class="service-item" onclick="selS(this, 'قص شعر', 150)">قص شعر <br> <span class="text-xs">150 ج (25 د)</span></div>
+            <div class="service-item" onclick="selS(this, 'حلاقة ذقن', 100)">حلاقة ذقن <br> <span class="text-xs">100 ج (15 د)</span></div>
+            <div class="service-item" onclick="selS(this, 'استشوار', 70)">استشوار <br> <span class="text-xs">70 ج (15 د)</span></div>
+            <div class="service-item" onclick="selS(this, 'قص أطفال', 100)">قص أطفال <br> <span class="text-xs">100 ج (20 د)</span></div>
+            <div class="service-item" onclick="selS(this, 'تمليس', 150)">تمليس <br> <span class="text-xs">150 ج (30 د)</span></div>
+            <div class="service-item" onclick="selS(this, 'بروتين', 500)">بروتين <br> <span class="text-xs">500 ج (90 د)</span></div>
+            <div class="service-item" onclick="selS(this, 'باكدج عريس', 1000)">باكدج عريس <br> <span class="text-xs">1000 ج (120 د)</span></div>
+            <div class="service-item" onclick="selS(this, 'واكس', 150)">واكس <br> <span class="text-xs">150 ج (15 د)</span></div>
+            <div class="service-item" onclick="selS(this, 'تنظيف بشرة', 250)">تنظيف بشرة <br> <span class="text-xs">250 ج (20 د)</span></div>
         </div>
 
         <button onclick="finish()" class="w-full bg-white text-black font-bold py-4 rounded-xl text-lg shadow-lg">تأكيد الحجز وفتح واتساب</button>
     </div>
 
-    <div id="adminPage" class="admin-section max-w-md mx-auto">
-        <h2 class="text-2xl font-bold gold-text text-center mb-6">لوحة الإدارة</h2>
+    <div id="adminPage" class="admin-section max-w-md mx-auto text-center">
+        <h2 class="text-2xl font-bold gold-text mb-6">لوحة الإدارة</h2>
         <div class="bg-card p-4 rounded-xl space-y-4">
-            <p>تعديل الأسعار والمواعيد قريباً...</p>
-            <button onclick="hideAdmin()" class="w-full bg-red-600 p-3 rounded-lg">خروج</button>
+            <p>أهلاً بك يا محمد! هنا يمكنك رؤية الحجوزات قريباً.</p>
+            <button onclick="hideAdmin()" class="w-full bg-red-600 p-3 rounded-lg font-bold">خروج</button>
         </div>
     </div>
 
@@ -61,7 +66,7 @@
         function setB(n, p) {
             barberName = n; barberPhone = p;
             document.querySelectorAll('.b-btn').forEach(b => b.style.borderColor = 'transparent');
-            event.target.style.borderColor = '#d4af37';
+            event.currentTarget.style.borderColor = '#d4af37';
         }
 
         function selS(el, name, price) {
@@ -73,9 +78,10 @@
         function finish() {
             const name = document.getElementById('custName').value;
             const time = document.getElementById('bookTime').value;
-            if(!name || !barberPhone || services.length === 0) return alert("كمل البيانات واختار الحلاق");
+            const date = document.getElementById('bookDate').value;
+            if(!name || !barberPhone || services.length === 0 || !time) return alert("كمل بياناتك واختار الحلاق والوقت");
             
-            const msg = `حجز جديد من الموقع:%0Aالاسم: ${name}%0Aالحلاق: ${barberName}%0Aالموعد: ${time}%0Aالخدمات: ${services.join(' + ')}`;
+            const msg = `حجز جديد من الموقع:%0Aالاسم: ${name}%0Aالحلاق: ${barberName}%0Aالتاريخ: ${date}%0Aالموعد: ${time}%0Aالخدمات: ${services.join(' + ')}`;
             window.open(`https://wa.me/2${barberPhone}?text=${msg}`);
         }
 
