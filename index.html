@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KAPILY SALON</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap');
+        body { font-family: 'Cairo', sans-serif; background-color: black; color: white; margin: 0; }
+        .step { display: none; }
+        .active { display: block; }
+    </style>
+</head>
+<body>
+    <div class="min-h-screen p-5 flex flex-col items-center">
+        <header class="text-center py-10">
+            <h1 class="text-5xl font-black text-yellow-500 tracking-tighter mb-2">KAPILY SALON</h1>
+            <div class="h-1.5 w-24 bg-yellow-600 mx-auto rounded-full"></div>
+        </header>
+
+        <div class="w-full max-w-md bg-zinc-900 p-8 rounded-[2.5rem] border border-zinc-800 shadow-2xl">
+            <div id="step1" class="step active">
+                <h2 class="text-2xl font-bold mb-8 border-r-4 border-yellow-500 pr-4 text-right">اختار الحلاق:</h2>
+                <div class="grid gap-5">
+                    <button onclick="toStep2('أشرف', '201119576866')" class="bg-zinc-800 p-6 rounded-2xl text-right hover:bg-yellow-600 hover:text-black font-bold transition-all border border-zinc-700">أشرف</button>
+                    <button onclick="toStep2('حماده', '201128375682')" class="bg-zinc-800 p-6 rounded-2xl text-right hover:bg-yellow-600 hover:text-black font-bold transition-all border border-zinc-700">حماده</button>
+                    <button onclick="toStep2('يوسف', '201229818899')" class="bg-zinc-800 p-6 rounded-2xl text-right hover:bg-yellow-600 hover:text-black font-bold transition-all border border-zinc-700">يوسف</button>
+                </div>
+            </div>
+
+            <div id="step2" class="step">
+                <button onclick="toStep1()" class="text-zinc-500 text-sm mb-6 flex items-center gap-2"><span>→</span> رجوع</button>
+                <h2 class="text-2xl font-bold mb-8 border-r-4 border-yellow-500 pr-4 text-right">اختار الخدمة:</h2>
+                <div class="grid gap-4">
+                    <button onclick="toStep3('حلاقة شعر', 100)" class="bg-zinc-800 p-6 rounded-2xl text-right flex justify-between items-center hover:border-yellow-500 border border-transparent transition-all">
+                        <span class="font-bold">حلاقة شعر</span>
+                        <span class="text-yellow-500 font-black text-xl">100 ج</span>
+                    </button>
+                    <button onclick="toStep3('شعر وذقن', 140)" class="bg-zinc-800 p-6 rounded-2xl text-right flex justify-between items-center hover:border-yellow-500 border border-transparent transition-all">
+                        <span class="font-bold">شعر وذقن</span>
+                        <span class="text-yellow-500 font-black text-xl">140 ج</span>
+                    </button>
+                </div>
+            </div>
+
+            <div id="step3" class="step">
+                <button onclick="toStep2()" class="text-zinc-500 text-sm mb-6 flex items-center gap-2"><span>→</span> رجوع</button>
+                <h2 class="text-2xl font-bold mb-8 border-r-4 border-yellow-500 pr-4 text-right">بيانات الحجز:</h2>
+                <div class="space-y-5">
+                    <input type="text" id="custName" placeholder="اكتب اسمك هنا" class="w-full bg-zinc-800 p-5 rounded-2xl outline-none border border-zinc-700 text-right focus:border-yellow-500 text-lg">
+                    <select id="custTime" class="w-full bg-zinc-800 p-5 rounded-2xl outline-none border border-zinc-700 text-right focus:border-yellow-500 text-lg">
+                        <option value="">اختار وقت الحجز</option>
+                        <option>12:00 PM</option><option>04:00 PM</option><option>08:00 PM</option>
+                    </select>
+                    <button onclick="book()" class="w-full bg-yellow-500 text-black font-black py-5 rounded-2xl text-xl shadow-xl hover:bg-yellow-400 transition-all mt-4">
+                        تأكيد عبر واتساب 📱
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let b = ""; let p = ""; let s = ""; let pr = "";
+        function hideAll() { document.querySelectorAll('.step').forEach(x => x.classList.remove('active')); }
+        function toStep1() { hideAll(); document.getElementById('step1').classList.add('active'); }
+        function toStep2(n, ph) { if(n){b=n;p=ph;} hideAll(); document.getElementById('step2').classList.add('active'); }
+        function toStep3(sn, sp) { s=sn;pr=sp; hideAll(); document.getElementById('step3').classList.add('active'); }
+        function book() {
+            const name = document.getElementById('custName').value;
+            const time = document.getElementById('custTime').value;
+            if(!name || !time) return alert("اكمل البيانات");
+            window.open(`https://wa.me/${p}?text=حجز جديد: ${name} - ${s} - الساعة ${time}`);
+        }
+    </script>
+</body>
+</html>
