@@ -7,83 +7,88 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Cairo', sans-serif; background-color: #000; color: #fff; direction: rtl; }
+        body { font-family: 'Cairo', sans-serif; background-color: #000; color: #fff; }
         .gold-text { color: #d4af37; }
-        .gold-border { border: 1px solid #d4af37; }
-        .bg-card { background-color: #1a1a1a; border: 1px solid #333; }
-        input, select { background-color: #111 !important; border: 1px solid #333 !important; color: #fff !important; width: 100%; padding: 12px; border-radius: 8px; margin-bottom: 10px; }
-        .service-item { padding: 10px; background-color: #1a1a1a; border: 1px solid #333; border-radius: 10px; text-align: center; cursor: pointer; transition: 0.3s; }
+        .bg-card { background-color: #111; border: 1px solid #333; }
+        input, select { background-color: #1a1a1a !important; border: 1px solid #333 !important; color: #fff !important; padding: 12px; border-radius: 8px; width: 100%; margin-bottom: 10px; }
+        .service-item { padding: 12px; background-color: #111; border: 1px solid #333; border-radius: 10px; text-align: center; cursor: pointer; transition: 0.3s; }
         .service-item.active { background-color: #d4af37; color: #000; font-weight: bold; }
+        .admin-section { display: none; }
     </style>
 </head>
-<body class="p-4 min-h-screen">
-    <div class="max-w-md mx-auto">
-        <h2 class="text-3xl font-black text-center gold-text mb-6 mt-4">كابيلي</h2>
+<body class="p-4">
+    <div id="bookingPage" class="max-w-md mx-auto">
+        <h2 onclick="showLogin()" class="text-3xl font-black text-center gold-text mb-6 mt-4 cursor-pointer">كابيلي</h2>
 
-        <div class="space-y-2">
-            <input type="text" id="custName" placeholder="الاسم">
-            <input type="tel" id="custPhone" placeholder="الموبايل">
-            
-            <div class="flex gap-2">
-                <input type="date" id="bookDate" value="2026-05-15">
-                <select id="barberList">
-                    <option value="أشرف">أشرف</option>
-                    <option value="حماده">حماده</option>
-                    <option value="يوسف">يوسف</option>
-                </select>
-            </div>
+        <input type="text" id="custName" placeholder="الاسم">
+        <input type="tel" id="custPhone" placeholder="الموبايل">
+        <div class="flex gap-2">
+            <input type="date" id="bookDate" value="2026-05-15">
             <input type="time" id="bookTime">
         </div>
 
         <p class="gold-text font-bold mt-4 mb-2">اختر الحلاق:</p>
-        <div class="flex gap-2 mb-4">
-            <button onclick="selectB('أشرف')" class="flex-1 bg-card p-2 rounded-lg hover:border-yellow-500 border border-transparent">أشرف</button>
-            <button onclick="selectB('حماده')" class="flex-1 bg-card p-2 rounded-lg hover:border-yellow-500 border border-transparent">حماده</button>
-            <button onclick="selectB('يوسف')" class="flex-1 bg-card p-2 rounded-lg hover:border-yellow-500 border border-transparent">يوسف</button>
+        <div class="grid grid-cols-3 gap-2 mb-4">
+            <button onclick="setB('أشرف', '01119576866')" class="b-btn bg-card p-3 rounded-lg border border-transparent">أشرف</button>
+            <button onclick="setB('حماده', '01128375682')" class="b-btn bg-card p-3 rounded-lg border border-transparent">حماده</button>
+            <button onclick="setB('يوسف', '01229818899')" class="b-btn bg-card p-3 rounded-lg border border-transparent">يوسف</button>
         </div>
 
         <p class="gold-text font-bold mb-2">اختر الخدمات:</p>
-        <div class="grid grid-cols-2 gap-2 mb-6">
-            <div class="service-item" onclick="selS(this, 'قص شعر', 150)">قص شعر <br> <span class="text-xs opacity-70">150 ج</span></div>
-            <div class="service-item" onclick="selS(this, 'حلاقة ذقن', 100)">حلاقة ذقن <br> <span class="text-xs opacity-70">100 ج</span></div>
-            <div class="service-item" onclick="selS(this, 'استشوار', 70)">استشوار <br> <span class="text-xs opacity-70">70 ج</span></div>
-            <div class="service-item" onclick="selS(this, 'قص أطفال', 100)">قص أطفال <br> <span class="text-xs opacity-70">100 ج</span></div>
-            <div class="service-item" onclick="selS(this, 'تمليس', 150)">تمليس <br> <span class="text-xs opacity-70">150 ج</span></div>
-            <div class="service-item" onclick="selS(this, 'بروتين', 500)">بروتين <br> <span class="text-xs opacity-70">500 ج</span></div>
-            <div class="service-item" onclick="selS(this, 'باكدج عريس', 1000)">باكدج عريس <br> <span class="text-xs opacity-70">1000 ج</span></div>
-            <div class="service-item" onclick="selS(this, 'تنظيف بشرة', 250)">تنظيف بشرة <br> <span class="text-xs opacity-70">250 ج</span></div>
+        <div class="grid grid-cols-2 gap-2 mb-6" id="servicesGrid">
+            <div class="service-item" onclick="selS(this, 'قص شعر', 150)">قص شعر <br> <span class="text-xs">150 ج</span></div>
+            <div class="service-item" onclick="selS(this, 'حلاقة ذقن', 100)">حلاقة ذقن <br> <span class="text-xs">100 ج</span></div>
+            <div class="service-item" onclick="selS(this, 'استشوار', 70)">استشوار <br> <span class="text-xs">70 ج</span></div>
+            <div class="service-item" onclick="selS(this, 'تنظيف بشرة', 250)">تنظيف بشرة <br> <span class="text-xs">250 ج</span></div>
         </div>
 
-        <button onclick="finish()" class="w-full bg-white text-black font-bold py-4 rounded-xl text-lg shadow-lg hover:bg-gray-200 transition-all">
-            تأكيد الحجز وفتح واتساب
-        </button>
+        <button onclick="finish()" class="w-full bg-white text-black font-bold py-4 rounded-xl text-lg shadow-lg">تأكيد الحجز وفتح واتساب</button>
+    </div>
 
-        <div class="mt-10">
-            <h4 class="gold-text text-center mb-4">جدول المواعيد المحجوزة</h4>
-            <div class="bg-card rounded-xl p-4 text-center text-gray-500 border border-zinc-800">
-                لا توجد حجوزات حالياً
-            </div>
+    <div id="adminPage" class="admin-section max-w-md mx-auto">
+        <h2 class="text-2xl font-bold gold-text text-center mb-6">لوحة الإدارة</h2>
+        <div class="bg-card p-4 rounded-xl space-y-4">
+            <p>تعديل الأسعار والمواعيد قريباً...</p>
+            <button onclick="hideAdmin()" class="w-full bg-red-600 p-3 rounded-lg">خروج</button>
         </div>
     </div>
 
     <script>
         let services = [];
-        function selectB(name) { document.getElementById('barberList').value = name; }
+        let barberName = "";
+        let barberPhone = "";
+
+        function setB(n, p) {
+            barberName = n; barberPhone = p;
+            document.querySelectorAll('.b-btn').forEach(b => b.style.borderColor = 'transparent');
+            event.target.style.borderColor = '#d4af37';
+        }
+
         function selS(el, name, price) {
             el.classList.toggle('active');
-            if(services.includes(name)) { services = services.filter(s => s !== name); }
-            else { services.push(name); }
+            if(services.includes(name)) services = services.filter(s => s !== name);
+            else services.push(name);
         }
+
         function finish() {
             const name = document.getElementById('custName').value;
-            const phone = document.getElementById('custPhone').value;
-            const barber = document.getElementById('barberList').value;
             const time = document.getElementById('bookTime').value;
-            const date = document.getElementById('bookDate').value;
-            if(!name || !time || services.length === 0) return alert("كمل بياناتك يا هندسة");
+            if(!name || !barberPhone || services.length === 0) return alert("كمل البيانات واختار الحلاق");
             
-            const msg = `حجز جديد من الموقع:%0Aالاسم: ${name}%0Aالموبايل: ${phone}%0Aالحلاق: ${barber}%0Aالتاريخ: ${date}%0Aالساعة: ${time}%0Aالخدمات: ${services.join(' + ')}`;
-            window.open(`https://wa.me/201017056037?text=${msg}`);
+            const msg = `حجز جديد من الموقع:%0Aالاسم: ${name}%0Aالحلاق: ${barberName}%0Aالموعد: ${time}%0Aالخدمات: ${services.join(' + ')}`;
+            window.open(`https://wa.me/2${barberPhone}?text=${msg}`);
+        }
+
+        function showLogin() {
+            let pass = prompt("دخل كلمة سر الإدارة:");
+            if(pass === "mohamed111997") {
+                document.getElementById('bookingPage').style.display = 'none';
+                document.getElementById('adminPage').style.display = 'block';
+            }
+        }
+        function hideAdmin() {
+            document.getElementById('adminPage').style.display = 'none';
+            document.getElementById('bookingPage').style.display = 'block';
         }
     </script>
 </body>
